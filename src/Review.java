@@ -1,6 +1,5 @@
 import jodd.json.JsonParser;
 import jodd.json.JsonSerializer;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -29,14 +28,20 @@ public class Review {
                 movie.star = scanner.nextLine();
                 System.out.printf("Enter the genre of %s: ", movie.title);
                 movie.genre = scanner.nextLine();
-                System.out.printf("Enter the length in minutes of %s: ", movie.title);
-                movie.length = Integer.valueOf(scanner.nextLine());
-                //Movie movie = new Movie(title, director, star, genre, length);
-
+                while (true) {
+                    try {
+                        System.out.printf("Enter the length in minutes of %s: ", movie.title);
+                        movie.length = Integer.valueOf(scanner.nextLine());
+                        break;
+                    }
+                    catch (Exception e2) {
+                        System.out.println("Invalid Entry!!!");
+                    }
+                }
                 try {
                     saveMovie();
                 }
-                catch (IOException eIo) {
+                catch (IOException e3) {
                     e.printStackTrace();
                 }
                 System.out.println("Goodbye.");
@@ -73,7 +78,6 @@ public class Review {
                             break;
                         default:
                             System.out.println("Invalid entry!");
-
                     }
                     try {
                         saveMovie();
@@ -83,13 +87,13 @@ public class Review {
                     }
                 case "n":
                     System.out.println("Have a nice day.");
+                    break;
                 default:
                     System.out.println("Invalid entry!");
             }
             break;
         }
     }
-
     public static void saveMovie() throws IOException {  //save game code
         JsonSerializer serializer = new JsonSerializer();
         String json = serializer.serialize(movie);
@@ -104,10 +108,7 @@ public class Review {
         Scanner scanner = new Scanner(f);
         scanner.useDelimiter("\\Z");
         String contents = scanner.next();
-
         JsonParser parser = new JsonParser();
         return parser.parse(contents, Movie.class);
     }
-
-
 }
