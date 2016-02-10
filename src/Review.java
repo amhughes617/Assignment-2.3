@@ -83,7 +83,6 @@ public class Review {
                     }
                 case "n":
                     System.out.println("Have a nice day.");
-                    System.exit(0);
                 default:
                     System.out.println("Invalid entry!");
             }
